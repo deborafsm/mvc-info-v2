@@ -39,8 +39,7 @@ public class ClienteDaoTest {
         }
         
     }
-    @Test
-    public void delete(){
+   /* public void delete(){
         Cliente cliente = new Cliente();
         cliente.setId(3);
         ClienteDao dao = new ClienteDao();  
@@ -48,9 +47,9 @@ public class ClienteDaoTest {
             System.out.println("Deletado com sucesso");
         }else{
             fail("Não foi possivel deletar");
-        }
+        }*/
         
-    }
+    
     
     
 }

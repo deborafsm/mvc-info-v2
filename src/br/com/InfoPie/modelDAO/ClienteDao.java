@@ -8,10 +8,12 @@ package br.com.InfoPie.modelDAO;
 import br.com.InfoPie.connection.ConnectionFactory;
 import br.com.InfoPie.model.beans.Cliente;
 import java.awt.HeadlessException;
+import java.awt.List;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import javax.swing.JOptionPane;
+import java.util.ArrayList;
 
 /**
  *
@@ -50,34 +52,43 @@ public class ClienteDao {
         }
     }
 
-    private boolean deleteClient(Cliente cliente) {
-        //int confirma = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja remover o Cliente ? ", "Atenção", JOptionPane.YES_NO_OPTION);
-        //if (confirma == JOptionPane.YES_OPTION) {
-        String sql = "delete from tb_clientes where id_cliente=?";
+    public boolean deleteClient(Cliente cliente) {
+        String sql = "DELETE FROM tb_clientes WHERE id_cliente = ?";
         PreparedStatement ps = null;
         try {
             ps = con.prepareStatement(sql);
             ps.setInt(1, cliente.getId());
             ps.executeUpdate();
             return true;
-            //pst = conexao.prepareStatement(sql);
-            //pst.setString(1, txtClienteId.getText());
-            //int deletado = pst.executeUpdate();
-            /*if (deletado > 0) {
-                    JOptionPane.showMessageDialog(null, "Usuário removido com sucesso!");
-                    txtClienteId.setText(null);
-                    txtClienteNome.setText(null);
-                    txtClienteFone.setText(null);
-                    txtClienteEnd.setText(null);
-                    txtClienteMail.setText(null);
-                    btnClienteAdd.setEnabled(true);
-                }*/
         } catch (HeadlessException | SQLException e) {
             System.out.println("Erro> " + e);
             return false;
         } finally {
             ConnectionFactory.closeConection(con, ps);
         }
+    }
+
+    public java.util.List<Cliente> readCliente() {
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        java.util.List<Cliente> cli = new ArrayList<>();
+        try {
+            ps = con.prepareStatement("SELECT * FROM tb_clientes");
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Cliente cliente = new Cliente();
+                cliente.setId(rs.getInt("id_cliente"));
+                cliente.setNomeCliente(rs.getString("nome_cliente"));
+                cliente.setEnderecoCliente(rs.getString("end_cliente"));
+                cliente.setTelefoneCliente(rs.getString("fone_cliente"));
+                cli.add(cliente);
+            }
+        } catch (Exception e) {
+            System.out.println("Erro " + e);//mOSTRA o erro
+        } finally {
+            ConnectionFactory.closeConection(con, ps, rs);
+        }
+        return cli;
     }
 
 }

@@ -5,6 +5,8 @@
  */
 package br.com.InfoPie.model.beans;
 
+import java.util.List;
+
 /**
  *
  * @author DeboraDev
@@ -126,6 +128,10 @@ public class Cliente {
 
     public void setCep(String cep) {
         this.cep = cep;
+    }
+
+    public void add(List<Cliente> cli) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
