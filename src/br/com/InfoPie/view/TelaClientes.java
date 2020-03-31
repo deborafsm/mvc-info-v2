@@ -9,11 +9,9 @@ import java.sql.*;
 import br.com.InfoPie.connection.ConnectionFactory;
 import br.com.InfoPie.model.beans.Cliente;
 import br.com.InfoPie.modelDAO.ClienteDao;
-import java.awt.HeadlessException;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
-import net.proteanit.sql.DbUtils;
 
 /**
  *
@@ -21,37 +19,43 @@ import net.proteanit.sql.DbUtils;
  */
 public class TelaClientes extends javax.swing.JInternalFrame {
 
+    //Inicia com as classes instanciadas 
     Cliente cliente = new Cliente();
     ClienteDao dao = new ClienteDao();
+    //Conexoes 
     Connection conexao = null;
-    PreparedStatement pst = null;
-    ResultSet rs = null;
 
     /**
      * Creates new form TelaClientes
      */
     public TelaClientes() {
         initComponents();
-
+        //Pega a conexao
         conexao = ConnectionFactory.getConnection();
+        //Cria o modelo da tabela 
         DefaultTableModel model = (DefaultTableModel) tblClientes.getModel();
+        //Classificador de linha
         tblClientes.setRowSorter(new TableRowSorter(model));
-        readJtable();
+
+        readJtable();//Já inicia com os dados do banco selecionado na tabela
 
     }
 
+    //Ele lista os dados dentro da tabela.
     public void readJtable() {
         DefaultTableModel model = (DefaultTableModel) tblClientes.getModel();
         model.setNumRows(0);
         ClienteDao cliente = new ClienteDao();
 
-        // prod.findAll().stream().forEach((p)-> {
-        for (Cliente c : cliente.readCliente()) {
+        // prod.findAll().stream().forEach((p)-> { //Operação funcional
+        for (Cliente c : cliente.readCliente()) { // for é usado para passar pelos objetos
             model.addRow(new Object[]{
+                //Chama os item 
                 c.getId(),
                 c.getNomeCliente(),
                 c.getEnderecoCliente(),
-                c.getTelefoneCliente()
+                c.getTelefoneCliente(),
+                c.getEmailCliente()
 
             });
 
@@ -59,66 +63,7 @@ public class TelaClientes extends javax.swing.JInternalFrame {
 
     }
 
-    /*private void Edita_Cliente() {
-        String sql = "update tb_clientes set nome_cliente = ?,end_cliente=?,fone_cliente=?,email_cliente=? where id_cliente = ?";
-        try {
-            pst = conexao.prepareStatement(sql);
-            pst.setString(1, txtClienteNome.getText());
-            pst.setString(2, txtClienteFone.getText());
-            pst.setString(3, txtClienteEnd.getText());
-            pst.setString(4, txtClienteMail.getText());
-            pst.setString(5, txtClienteId.getText());
-            if ((txtClienteNome.getText().isEmpty()) || (txtClienteFone.getText().isEmpty())) {
-                JOptionPane.showMessageDialog(null, "Preencha os campos obrigatórios!");
-            } else {
-                //Add CLIENTES
-                int add = pst.executeUpdate();
-                if (add > 0) {
-                    JOptionPane.showMessageDialog(null, "Dados do cliente alterados com sucesso! ");
-
-                    txtClienteNome.setText(null);
-                    txtClienteFone.setText(null);
-                    txtClienteEnd.setText(null);
-                    txtClienteMail.setText(null);
-                    btnClienteAdd.setEnabled(true);
-                }
-            }
-        } catch (HeadlessException | SQLException e) {
-            JOptionPane.showMessageDialog(null, e);
-        }
-
-    }
-
-    //metodo para pesquisa de clientes com filtro
-  /*  private void pesquisa_cliente() {
-        String sql = "select * from tb_clientes where nome_cliente like ?";
-        try {
-            pst = conexao.prepareStatement(sql);
-            //passa o conteudo da caixa de pesquisa txtClientePequisar para a interrogação
-            //"%" é a continuação da String SQL
-            pst.setString(1, txtClienteFinder.getText() + "%");
-            rs = pst.executeQuery();
-            //Usando a biblioteca rs2xml.jar
-            //Preenche a tabela tblClientes do FORM
-            //Pesquisa em tempo real
-            tblClientes.setModel(DbUtils.resultSetToTableModel(rs));
-
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, e);
-        }
-    }
-
     //Metodo SETA campos da tabela do banco de dados para o form
-    /*public void setar() {
-        int setar = tblClientes.getSelectedRow();
-        txtClienteId.setText(tblClientes.getModel().getValueAt(setar, 0).toString());
-        txtClienteNome.setText(tblClientes.getModel().getValueAt(setar, 1).toString());
-        txtClienteFone.setText(tblClientes.getModel().getValueAt(setar, 2).toString());
-        txtClienteEnd.setText(tblClientes.getModel().getValueAt(setar, 3).toString());
-        txtClienteMail.setText(tblClientes.getModel().getValueAt(setar, 4).toString());
-
-        btnClienteAdd.setEnabled(false);
-    }*/
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -149,6 +94,7 @@ public class TelaClientes extends javax.swing.JInternalFrame {
         btnClienteEditar = new javax.swing.JButton();
         btnClienteRemover = new javax.swing.JButton();
         btnClienteAdd = new javax.swing.JButton();
+        btnAtualizar = new javax.swing.JButton();
 
         jRadioButtonMenuItem1.setSelected(true);
         jRadioButtonMenuItem1.setText("jRadioButtonMenuItem1");
@@ -176,17 +122,17 @@ public class TelaClientes extends javax.swing.JInternalFrame {
 
         tblClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "ID", "Nome", "Endereço", "Telefone"
+                "ID", "Nome", "Endereço", "Telefone", "E-mail"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -257,13 +203,11 @@ public class TelaClientes extends javax.swing.JInternalFrame {
                             .addComponent(txtClienteNome)
                             .addComponent(txtClienteEnd)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(txtClienteMail, javax.swing.GroupLayout.PREFERRED_SIZE, 427, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 261, Short.MAX_VALUE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtClienteMail, javax.swing.GroupLayout.PREFERRED_SIZE, 427, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtClienteId, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtClienteFone, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addGap(10, 10, 10)
                 .addComponent(jLabel8))
         );
@@ -325,23 +269,36 @@ public class TelaClientes extends javax.swing.JInternalFrame {
             }
         });
 
+        btnAtualizar.setText("atualizar");
+        btnAtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAtualizarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(9, 9, 9)
-                .addComponent(btnClienteAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(96, 96, 96)
-                .addComponent(btnClienteRemover, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 104, Short.MAX_VALUE)
-                .addComponent(btnClienteEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(9, 9, 9)
+                        .addComponent(btnClienteAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnClienteRemover, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnClienteEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(377, 377, 377)
+                        .addComponent(btnAtualizar)))
+                .addContainerGap(220, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(0, 30, Short.MAX_VALUE)
+                .addComponent(btnAtualizar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnClienteAdd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnClienteRemover, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -364,7 +321,7 @@ public class TelaClientes extends javax.swing.JInternalFrame {
                                 .addGap(26, 26, 26)
                                 .addComponent(txtClienteFinder, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 44, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -400,21 +357,45 @@ public class TelaClientes extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtClienteNomeActionPerformed
 
     private void btnClienteRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClienteRemoverActionPerformed
-        cliente.setId(Integer.parseInt(txtClienteFinder.getText()));
-        dao.deleteClient(cliente);
-        
+
+        //Remover
+        /* if (tblClientes.getSelectedRow() != -1) {
+            cliente.setId(Integer.parseInt(txtClienteFinder.getText()));
+            dao.deleteClient(cliente);
+
+            txtClienteNome.setText("");
+            txtClienteEnd.setText("");
+            txtClienteFone.setText("");
+            txtClienteMail.setText("");
+
+            readJtable();
+        } else {
+            JOptionPane.showMessageDialog(null, "Preencha o ID");
+        }*/
 
     }//GEN-LAST:event_btnClienteRemoverActionPerformed
 
     private void btnClienteEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClienteEditarActionPerformed
         // Metodo Editar Cliente
+        /*if (tblClientes.getSelectedRow() != -1) {
+            cliente.setNomeCliente(txtClienteNome.getText());
+            cliente.setEnderecoCliente(txtClienteEnd.getText());
+            cliente.setTelefoneCliente(txtClienteFone.getText());
+            cliente.setEmailCliente(txtClienteMail.getText());
+            dao.updateCliente(cliente);
+            txtClienteNome.setText("");
+            txtClienteEnd.setText("");
+            txtClienteFone.setText("");
+            txtClienteMail.setText("");
+            readJtable();
+        }*/
 
     }//GEN-LAST:event_btnClienteEditarActionPerformed
 
     private void btnClienteAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClienteAddActionPerformed
         //EVENTO PARA ADICIONAR CLIENTES NO BANCO DE DADOS
         //Adicionar Cliente OK
-        cliente.setNomeCliente(txtClienteNome.getText());
+        /*cliente.setNomeCliente(txtClienteNome.getText());
         cliente.setEnderecoCliente(txtClienteEnd.getText());
         cliente.setTelefoneCliente(txtClienteFone.getText());
         cliente.setEmailCliente(txtClienteMail.getText());
@@ -431,13 +412,19 @@ public class TelaClientes extends javax.swing.JInternalFrame {
             txtClienteMail.setText(null);
             readJtable();
 
-        }
+        }*/
 
 
     }//GEN-LAST:event_btnClienteAddActionPerformed
 
     private void tblClientesKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblClientesKeyReleased
+        /* if (tblClientes.getSelectedRow() != -1) {
+            txtClienteNome.setText(tblClientes.getValueAt(tblClientes.getSelectedRow(), 1).toString());
+            txtClienteEnd.setText(tblClientes.getValueAt(tblClientes.getSelectedRow(), 2).toString());
+            txtClienteFone.setText(tblClientes.getValueAt(tblClientes.getSelectedRow(), 3).toString());
+            txtClienteMail.setText(tblClientes.getValueAt(tblClientes.getSelectedRow(), 4).toString());
 
+        }*/
     }//GEN-LAST:event_tblClientesKeyReleased
 
     private void txtClienteFinderKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtClienteFinderKeyReleased
@@ -450,12 +437,27 @@ public class TelaClientes extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         //clicando com o mouse
         //seta campos
-        //setar();
+        /*int setar = tblClientes.getSelectedRow();
+        txtClienteId.setText(tblClientes.getModel().getValueAt(setar, 0).toString());
+        txtClienteNome.setText(tblClientes.getModel().getValueAt(setar, 1).toString());
+        txtClienteFone.setText(tblClientes.getModel().getValueAt(setar, 2).toString());
+        txtClienteEnd.setText(tblClientes.getModel().getValueAt(setar, 3).toString());
+        txtClienteMail.setText(tblClientes.getModel().getValueAt(setar, 4).toString());
+
+        btnClienteAdd.setEnabled(false);*/
+        //readJtable();
+
 
     }//GEN-LAST:event_tblClientesMouseClicked
 
+    private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
+
+
+    }//GEN-LAST:event_btnAtualizarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAtualizar;
     private javax.swing.JButton btnClienteAdd;
     private javax.swing.JButton btnClienteEditar;
     private javax.swing.JButton btnClienteRemover;
