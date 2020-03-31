@@ -31,7 +31,7 @@ public class ClienteDao {
     //Esse método insere um cliente no banco de dados
     public void insertClient(Cliente cliente) {
         //query para adicionar cliente
-        String sql = "INSERT INTO tb_clientes(nome_cliente,end_cliente,fone_cliente,email_cliente)VALUES(?,?,?,?,?)";
+        String sql = "INSERT INTO tb_clientes(nome_cliente,end_cliente,fone_cliente,email_cliente)VALUES(?,?,?,?)";
         PreparedStatement ps = null; //Prepara os parametros de forma mais segura
         try { //tenta fazer a logica abaixo
             ps = con.prepareStatement(sql); //preparada os parametros de forma segura usando a query de inserção
@@ -97,7 +97,8 @@ public class ClienteDao {
     }
     //Metodo que edita o cliente do banco de dados
     public void updateCliente(Cliente cliente) {//Query de atualizar cliente
-        String sql = "UPDATE tb_clientes SET nome_cliente =?,end_cliente= ?,fone_cliente = ?,email_cliente=?  WHERE id_cliente = ? )";
+        //("UPDATE produto SET descricao = ? ,qtd = ?,preco = ? WHERE id = ?");
+        String sql = ("UPDATE tb_clientes SET nome_cliente = ? , end_cliente = ?,fone_cliente = ?, email_cliente = ?  WHERE id_cliente = ? ");
         PreparedStatement ps = null;
         try {//tenta a logica abaixo
             ps = con.prepareStatement(sql);
