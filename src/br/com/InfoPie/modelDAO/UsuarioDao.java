@@ -40,11 +40,41 @@ public class UsuarioDao {
                 logar = true;
             }
         } catch (SQLException e) {
-            System.out.println("erro: "+e);
+            System.out.println("erro: " + e);
         } finally {
             ConnectionFactory.closeConection(con, ps, rs);
         }
         return logar;
     }
 
+    /*public boolean consultarUsuario() {
+        String sql = "select * from tb_usuarios where id_user =?";
+        try {
+            Connection con = ConnectionFactory.getConnection();
+            PreparedStatement ps = null;
+            ResultSet rs = null;
+
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, usuario.getIdUser());
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                txtUsuarioNome.setText(rs.getString(2));
+                txtUsuarioFone.setText(rs.getString(3));
+                txtUsuarioLogin.setText(rs.getString(4));
+                txtUsuarioPass.setText(rs.getString(5));
+                //Combo Box 
+                cboUsuarioPerfil.setSelectedItem(rs.getString(6));
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Usuário não cadastrado");
+                txtUsuarioNome.setText(null);
+                txtUsuarioFone.setText(null);
+                txtUsuarioLogin.setText(null);
+                txtUsuarioPass.setText(null);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }*/
 }
+

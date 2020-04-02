@@ -96,7 +96,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         MenuCadUser.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.ALT_MASK));
         MenuCadUser.setText("Usuários");
-        MenuCadUser.setEnabled(false);
         MenuCadUser.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 MenuCadUserActionPerformed(evt);
@@ -107,7 +106,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         menu.add(menuCad);
 
         menuRelatorio.setText("Relatório");
-        menuRelatorio.setEnabled(false);
 
         MenuRelServ.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.ALT_MASK));
         MenuRelServ.setText("Serviços");

@@ -62,6 +62,27 @@ public class TelaClientes extends javax.swing.JInternalFrame {
         }
 
     }
+    //esse metdo lista dados para dentro da tabela atraves da chamada do metodo finderCliente
+    public void readJtableForNameClient(String nome) {
+        DefaultTableModel model = (DefaultTableModel) tblClientes.getModel();
+        model.setNumRows(0);
+        ClienteDao cliente = new ClienteDao();
+
+        // prod.findAll().stream().forEach((p)-> { //Operação funcional
+        for (Cliente c : cliente.findeClient(nome)) { // for é usado para passar pelos objetos
+            model.addRow(new Object[]{
+                //Chama os item 
+                c.getId(),
+                c.getNomeCliente(),
+                c.getEnderecoCliente(),
+                c.getTelefoneCliente(),
+                c.getEmailCliente()
+
+            });
+
+        }
+
+    }
 
     //Metodo SETA campos da tabela do banco de dados para o form
     /**
@@ -97,7 +118,7 @@ public class TelaClientes extends javax.swing.JInternalFrame {
         tblClientes = new javax.swing.JTable();
         jLabel8 = new javax.swing.JLabel();
         btnPesquisar = new javax.swing.JButton();
-        txtID = new javax.swing.JTextField();
+        txtFinderName = new javax.swing.JTextField();
 
         jRadioButtonMenuItem1.setSelected(true);
         jRadioButtonMenuItem1.setText("jRadioButtonMenuItem1");
@@ -289,9 +310,14 @@ public class TelaClientes extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(tblClientes);
 
-        jLabel8.setText("ID");
+        jLabel8.setText("Nome Cliente: ");
 
         btnPesquisar.setText("Pesquisar");
+        btnPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPesquisarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -306,17 +332,17 @@ public class TelaClientes extends javax.swing.JInternalFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtFinderName, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addComponent(btnPesquisar)
-                        .addGap(0, 189, Short.MAX_VALUE))))
+                        .addGap(60, 60, 60))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtFinderName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnPesquisar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE)
@@ -448,6 +474,12 @@ public class TelaClientes extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_tblClientesKeyReleased
 
+    private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
+        //Chama metodo list para procura por nome
+        //Pega o nome da pessoa e busca no banco de dados
+        readJtableForNameClient(txtFinderName.getText());
+    }//GEN-LAST:event_btnPesquisarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddCliente;
@@ -471,8 +503,8 @@ public class TelaClientes extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtCity;
     private javax.swing.JTextField txtEndereco;
     private javax.swing.JTextField txtEstado;
+    private javax.swing.JTextField txtFinderName;
     private javax.swing.JFormattedTextField txtFone;
-    private javax.swing.JTextField txtID;
     private javax.swing.JTextField txtMail;
     private javax.swing.JTextField txtNome;
     // End of variables declaration//GEN-END:variables

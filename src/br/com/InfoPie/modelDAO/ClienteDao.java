@@ -97,7 +97,6 @@ public class ClienteDao {
     }
     //Metodo que edita o cliente do banco de dados
     public void updateCliente(Cliente cliente) {//Query de atualizar cliente
-        //("UPDATE produto SET descricao = ? ,qtd = ?,preco = ? WHERE id = ?");
         String sql = ("UPDATE tb_clientes SET nome_cliente = ? , end_cliente = ?,fone_cliente = ?, email_cliente = ?  WHERE id_cliente = ? ");
         PreparedStatement ps = null;
         try {//tenta a logica abaixo
@@ -116,5 +115,34 @@ public class ClienteDao {
         } finally {//Fecha as conexões
             ConnectionFactory.closeConection(con, ps);
         }
+    }
+    //Esse metodo vai uma pesquisa de clientes por nome 
+     public java.util.List<Cliente> findeClient(String nome ) {
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        //Array lista adicionada
+        java.util.List<Cliente> cliFinder = new ArrayList<>(); //Array de clientes
+        try {   //seleciona por nome do cliente 
+            ps = con.prepareStatement("SELECT * FROM tb_clientes WHERE nome_cliente like ?"); //Seleciona tdo de tb_clientes
+            ps.setString(1, "%"+nome+"%");// ? = nome
+            rs = ps.executeQuery(); //Result set para se obter o resultado
+            while (rs.next()) {//Enquando tiver resultado (linhas)
+                Cliente cliente = new Cliente();
+                //Lista os componentes
+                cliente.setId(rs.getInt("id_cliente"));
+                cliente.setNomeCliente(rs.getString("nome_cliente"));
+                cliente.setEnderecoCliente(rs.getString("end_cliente"));
+                cliente.setTelefoneCliente(rs.getString("fone_cliente"));
+                cliente.setEmailCliente(rs.getString("email_cliente"));
+                //E adiciona no array list
+                cliFinder.add(cliente);
+            }
+        } catch (Exception e) {
+            System.out.println("Erro " + e);//Mostra o erro da logica, ja que só mostra algum resultado
+        } finally {
+            ConnectionFactory.closeConection(con, ps, rs);
+        }
+        //Retora o array 
+        return cliFinder;
     }
 }
