@@ -22,44 +22,29 @@ import javax.swing.JOptionPane;
  */
 public class UsuarioDao {
 
-    private Connection con = null;
+    Usuarios usuario = new Usuarios();
 
-    public UsuarioDao() {
-        con = ConnectionFactory.getConnection();
-    }
+    public boolean logar(String login, String senha) {
 
-    //Logar
-    public void logar(Usuarios usuario) {
-        String sql = "select * from tb_usuarios where login=? and senha=?";
+        Connection con = ConnectionFactory.getConnection();
         PreparedStatement ps = null;
         ResultSet rs = null;
-        try {
-            ps = con.prepareStatement(sql);
-            ps.setString(1, usuario.getLogin());
-            ps.setString(2, usuario.getSenha());
 
+        boolean logar = false;
+        try {
+            ps = con.prepareStatement("SELECT * FROM  tb_usuarios WHERE login = ? AND senha = ?");
+            ps.setString(1, login);
+            ps.setString(2, senha);
             rs = ps.executeQuery();
             if (rs.next()) {
-                String perfil = rs.getString(6);
-                if (perfil.equals("admin")) {
-                    TelaPrincipal principal = new TelaPrincipal();
-                    principal.setVisible(true);
-                    TelaPrincipal.menuRelatorio.setEnabled(true);
-                    TelaPrincipal.MenuCadUser.setEnabled(true);
-                    TelaPrincipal.lblUser.setText(rs.getString(2));
-                    TelaPrincipal.lblUser.setForeground(Color.red);
-                } else {
-                    TelaPrincipal principal = new TelaPrincipal();
-                    principal.setVisible(true);
-                    TelaPrincipal.lblUser.setText(rs.getString(2));
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "usuário e/ou senha inválido(s)");
+                logar = true;
             }
-        } catch (HeadlessException | SQLException e) {
-            JOptionPane.showMessageDialog(null, e);
+        } catch (SQLException e) {
+            System.out.println("erro: "+e);
         } finally {
             ConnectionFactory.closeConection(con, ps, rs);
         }
+        return logar;
     }
+
 }

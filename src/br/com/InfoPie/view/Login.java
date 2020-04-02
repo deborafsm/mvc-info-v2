@@ -16,42 +16,6 @@ public class Login extends javax.swing.JFrame {
     UsuarioDao dao = new UsuarioDao();
     Usuarios user = new Usuarios();
 
-    /*public void logar() {
-        String sql = "select * from tb_usuarios where login=? and senha=?";
-        try {
-            String user = this.txtUser.getText();
-            pst = conexao.prepareStatement(sql);
-            String senha = new String(txtSenha.getPassword());
-            pst.setString(1, user);
-            pst.setString(2, senha);
-            rs = pst.executeQuery();
-
-            if (rs.next()) {
-                String perfil = rs.getString(6);
-                if (perfil.equals("admin")) {
-                    TelaPrincipal principal = new TelaPrincipal();
-                    principal.setVisible(true);
-                    TelaPrincipal.menuRelatorio.setEnabled(true);
-                    TelaPrincipal.MenuCadUser.setEnabled(true);
-                    TelaPrincipal.lblUser.setText(rs.getString(2));
-                    TelaPrincipal.lblUser.setForeground(Color.red);
-                    this.dispose();
-                    conexao.close();
-                } else {
-                    TelaPrincipal principal = new TelaPrincipal();
-                    principal.setVisible(true);
-                    TelaPrincipal.lblUser.setText(rs.getString(2));
-                    this.dispose();
-                    conexao.close();
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "usuário e/ou senha inválido(s)");
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
-        }
-    }
-
     /**
      * Creates new form Login
      */
@@ -167,14 +131,12 @@ public class Login extends javax.swing.JFrame {
 
     private void btn_LoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_LoginActionPerformed
 
-      
-        user.setLogin(txtUser.getText());
-        user.setSenha(txtSenha.getText());
-        
-
-        TelaPrincipal principal = new TelaPrincipal();
-        principal.setVisible(true);
-
+        if (dao.logar(txtUser.getText(), new String(txtSenha.getPassword()))) {
+            new TelaPrincipal().setVisible(true);
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(null, "Senha incorreta");
+        }
     }//GEN-LAST:event_btn_LoginActionPerformed
 
     /**
