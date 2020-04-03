@@ -3,6 +3,7 @@ package br.com.InfoPie.view;
 import java.sql.*;
 import br.com.InfoPie.connection.ConnectionFactory;
 import br.com.InfoPie.model.beans.Usuarios;
+import br.com.InfoPie.modelDAO.LoginDao;
 import br.com.InfoPie.modelDAO.UsuarioDao;
 import java.awt.Color;
 import javax.swing.JOptionPane;
@@ -15,6 +16,7 @@ public class Login extends javax.swing.JFrame {
     ResultSet rs = null;
     UsuarioDao dao = new UsuarioDao();
     Usuarios user = new Usuarios();
+    LoginDao ldao = new LoginDao();
 
     /**
      * Creates new form Login
@@ -131,7 +133,7 @@ public class Login extends javax.swing.JFrame {
 
     private void btn_LoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_LoginActionPerformed
 
-        if (dao.logar(txtUser.getText(), new String(txtSenha.getPassword()))) {
+        if (ldao.logar(txtUser.getText(), new String(txtSenha.getPassword()))) {
             new TelaPrincipal().setVisible(true);
             this.dispose();
         } else {

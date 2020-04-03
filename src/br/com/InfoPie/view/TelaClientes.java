@@ -402,7 +402,7 @@ public class TelaClientes extends javax.swing.JInternalFrame {
         txtEndereco.setText("");
         txtFone.setText("");
         txtMail.setText("");
-        //Faz a atualização da tabela e dados do banco de dados
+        //Faz a atualização na tabela 
         readJtable();
     }//GEN-LAST:event_btnAddClienteActionPerformed
 

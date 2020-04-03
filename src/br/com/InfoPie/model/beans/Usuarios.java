@@ -102,7 +102,10 @@ public class Usuarios {
         this.perfil = perfil;
     }
     
-    
+    @Override
+    public String toString() {
+        return getPerfil(); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }
 

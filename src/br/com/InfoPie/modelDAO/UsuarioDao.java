@@ -7,13 +7,8 @@ package br.com.InfoPie.modelDAO;
 
 import br.com.InfoPie.connection.ConnectionFactory;
 import br.com.InfoPie.model.beans.Usuarios;
-import br.com.InfoPie.view.TelaPrincipal;
-import java.awt.Color;
-import java.awt.HeadlessException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 /**
@@ -22,32 +17,36 @@ import javax.swing.JOptionPane;
  */
 public class UsuarioDao {
 
-    Usuarios usuario = new Usuarios();
+    private Connection con = null;
 
-    public boolean logar(String login, String senha) {
-
-        Connection con = ConnectionFactory.getConnection();
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-
-        boolean logar = false;
-        try {
-            ps = con.prepareStatement("SELECT * FROM  tb_usuarios WHERE login = ? AND senha = ?");
-            ps.setString(1, login);
-            ps.setString(2, senha);
-            rs = ps.executeQuery();
-            if (rs.next()) {
-                logar = true;
-            }
-        } catch (SQLException e) {
-            System.out.println("erro: " + e);
-        } finally {
-            ConnectionFactory.closeConection(con, ps, rs);
-        }
-        return logar;
+    public UsuarioDao() {
+        con = ConnectionFactory.getConnection();
     }
+    Usuarios usuario = new Usuarios();
+    //Adiciona Usuario no sistema
+    public void InsertUser(Usuarios usuarios) {
 
-    /*public boolean consultarUsuario() {
+        String sql = "INSERT INTO tb_usuarios(usuario,fone,login,senha,perfil) VALUES(?,?,?,?,?)";
+        PreparedStatement pst = null;
+        try {
+            pst = con.prepareStatement(sql);
+            pst.setString(1, usuarios.getNomeUsuario());
+            pst.setString(2, usuarios.getTelefoneUsuario());
+            pst.setString(3, usuarios.getLogin());
+            pst.setString(4, usuarios.getSenha());
+            pst.setString(5, usuarios.getPerfil());
+            pst.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Usuario adicionado com sucesso");
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao adicionar usuario no sistema" + e);
+        } finally {
+            ConnectionFactory.closeConection(con, pst);
+        }
+    }
+}
+
+/*public boolean consultarUsuario() {
         String sql = "select * from tb_usuarios where id_user =?";
         try {
             Connection con = ConnectionFactory.getConnection();
@@ -76,5 +75,3 @@ public class UsuarioDao {
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e);
         }*/
-}
-
