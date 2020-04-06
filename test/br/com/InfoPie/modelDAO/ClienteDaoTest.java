@@ -19,7 +19,7 @@ public class ClienteDaoTest {
     public ClienteDaoTest() {
     }
 
-    @Ignore 
+    /*@Ignore 
     public void inserir() { //
         Cliente cliente = new Cliente();
         
