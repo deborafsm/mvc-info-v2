@@ -7,8 +7,12 @@ package br.com.InfoPie.modelDAO;
 
 import br.com.InfoPie.connection.ConnectionFactory;
 import br.com.InfoPie.model.beans.Usuarios;
+import java.awt.HeadlessException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
@@ -23,6 +27,7 @@ public class UsuarioDao {
         con = ConnectionFactory.getConnection();
     }
     Usuarios usuario = new Usuarios();
+
     //Adiciona Usuario no sistema
     public void InsertUser(Usuarios usuarios) {
 
@@ -44,34 +49,73 @@ public class UsuarioDao {
             ConnectionFactory.closeConection(con, pst);
         }
     }
+    //Deleta usuario do banco de dados
+    public void deleteUser(Usuarios usuario) {
+
+        String sql = "DELETE FROM tb_usuarios WHERE id_user=?"; //query deleta usuario atraves do id
+        PreparedStatement pst = null;
+        try {
+            pst = con.prepareStatement(sql);//le a query
+            pst.setInt(1, usuario.getIdUser());//pega o id
+            pst.executeUpdate();//Executa e atualiza query
+            JOptionPane.showMessageDialog(null, "Usuário removido com sucesso!");//mensagem de sucesso
+        } catch (HeadlessException | SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao remover usuario!" + e);//,msg de falha
+        } finally {
+            ConnectionFactory.closeConection(con, pst);//fecha a conexao
+        }
+
+    }
+
+    //Retorna uma lista
+    public java.util.List<Usuarios> readUsuarios() {//seleciona usuarios
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        //Cria uma array com nome user
+        java.util.List<Usuarios> user = new ArrayList<>(); //Array de usuarioss
+        try {
+            //executa com segurança o select
+            ps = con.prepareStatement("SELECT * FROM tb_usuarios"); //Seleciona tdo de tb_usuarios
+            rs = ps.executeQuery(); //Result set para se obter o resultado
+            while (rs.next()) {//Enquando tiver resultado (linhas)
+                Usuarios usuarios = new Usuarios();
+                //Lista os componentes que vao ser setados
+                usuarios.setIdUser(rs.getInt("id_user"));
+                usuarios.setNomeUsuario(rs.getString("usuario"));
+                usuarios.setTelefoneUsuario(rs.getString("fone"));
+                usuarios.setLogin(rs.getString("login"));
+                usuarios.setSenha(rs.getString("senha"));
+                //user.add adiciona os usuarios no array list
+                user.add(usuarios);
+            }
+        } catch (Exception e) {
+            System.out.println("Erro ao aprensetar dados na tabela" + e);//Mostra o erro da logica, ja que só mostra algum resultado
+        } finally {
+            ConnectionFactory.closeConection(con, ps, rs);//Fechas as conexoes usadas
+        }
+        //Retora o array 
+        return user;
+    }
+    //Atualiza Usuario
+    public void updateUser(Usuarios usuario){
+        PreparedStatement ps = null;
+        try {
+            ps = con.prepareStatement("UPDATE tb_usuarios SET usuario = ? , senha = ? , login = ?, fone = ?,perfil =? WHERE id_user = ?");
+            ps.setString(1, usuario.getNomeUsuario());
+            ps.setString(2, usuario.getSenha());
+            ps.setString(3, usuario.getLogin());
+            ps.setString(4, usuario.getTelefoneUsuario());
+           //Erro perfil por que se trata de um combo box
+            ps.setString(5, usuario.getPerfil());
+            ps.setInt(6, usuario.getIdUser());
+            ps.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Usuario editado com sucesso!!");
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Não foi possivel atualizar o usuario."+e);
+        }finally{
+            ConnectionFactory.closeConection(con, ps);
+        }
+    }
 }
 
-/*public boolean consultarUsuario() {
-        String sql = "select * from tb_usuarios where id_user =?";
-        try {
-            Connection con = ConnectionFactory.getConnection();
-            PreparedStatement ps = null;
-            ResultSet rs = null;
-
-            ps = con.prepareStatement(sql);
-            ps.setInt(1, usuario.getIdUser());
-            rs = ps.executeQuery();
-
-            if (rs.next()) {
-                txtUsuarioNome.setText(rs.getString(2));
-                txtUsuarioFone.setText(rs.getString(3));
-                txtUsuarioLogin.setText(rs.getString(4));
-                txtUsuarioPass.setText(rs.getString(5));
-                //Combo Box 
-                cboUsuarioPerfil.setSelectedItem(rs.getString(6));
-
-            } else {
-                JOptionPane.showMessageDialog(null, "Usuário não cadastrado");
-                txtUsuarioNome.setText(null);
-                txtUsuarioFone.setText(null);
-                txtUsuarioLogin.setText(null);
-                txtUsuarioPass.setText(null);
-            }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, e);
-        }*/

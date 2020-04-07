@@ -62,6 +62,7 @@ public class TelaClientes extends javax.swing.JInternalFrame {
         }
 
     }
+
     //esse metdo lista dados para dentro da tabela atraves da chamada do metodo finderCliente
     public void readJtableForNameClient(String nome) {
         DefaultTableModel model = (DefaultTableModel) tblClientes.getModel();

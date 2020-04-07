@@ -97,10 +97,9 @@ public class ClienteDao {
     }
     //Metodo que edita o cliente do banco de dados
     public void updateCliente(Cliente cliente) {//Query de atualizar cliente
-        String sql = ("UPDATE tb_clientes SET nome_cliente = ? , end_cliente = ?,fone_cliente = ?, email_cliente = ?  WHERE id_cliente = ? ");
         PreparedStatement ps = null;
         try {//tenta a logica abaixo
-            ps = con.prepareStatement(sql);
+            ps = con.prepareStatement("UPDATE tb_clientes SET nome_cliente = ? , end_cliente = ?,fone_cliente = ?, email_cliente = ?  WHERE id_cliente = ? ");
             //Permissão para atualizar apenas os componentes abaixo
             ps.setString(1, cliente.getNomeCliente());
             ps.setString(2, cliente.getEnderecoCliente());
