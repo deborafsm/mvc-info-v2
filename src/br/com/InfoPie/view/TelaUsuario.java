@@ -43,7 +43,7 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
         DefaultTableModel model = (DefaultTableModel) tbUsuarios.getModel();
         model.setNumRows(0);
         UsuarioDao usuario = new UsuarioDao();
-        for (Usuarios user : usuario.readUsuarios()) {
+        usuario.readUsuarios().forEach((user) -> {
             model.addRow(new Object[]{
                 //Chama os objetos (é com virgula pq é objeto de array) dentro de [].
                 user.getIdUser(),
@@ -52,7 +52,7 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
                 user.getLogin(),
                 user.getSenha(),
                 user.getPerfil()});
-        }
+        });
     }
 
     /**
@@ -454,10 +454,14 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
             txtUsuarioFone.setText(tbUsuarios.getValueAt(tbUsuarios.getSelectedRow(), 2).toString());
             txtUsuarioLogin.setText(tbUsuarios.getValueAt(tbUsuarios.getSelectedRow(), 3).toString());
             txtUsuarioPass.setText(tbUsuarios.getValueAt(tbUsuarios.getSelectedRow(), 4).toString());
-            // cboUsuarioPerfil.setSelectedItem((tbUsuarios.getValueAt(tbUsuarios.getSelectedRow(), 5).toString()));
-            int linhaselcionada = tbUsuarios.getSelectedRow();
+            
+            //cboUsuarioPerfil.setSelectedItem((tbUsuarios.getValueAt(tbUsuarios.getSelectedRow(), 5).toString()));
+            
+            
+            
+            /*int linhaselcionada = tbUsuarios.getSelectedRow();
             String sta = (String) tbUsuarios.getValueAt(linhaselcionada, 5);
-            cboUsuarioPerfil.setSelectedItem(sta);
+            cboUsuarioPerfil.setSelectedItem(sta);*/
         }
     }//GEN-LAST:event_tbUsuariosMouseClicked
 
@@ -470,9 +474,9 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
             txtUsuarioLogin.setText(tbUsuarios.getValueAt(tbUsuarios.getSelectedRow(), 3).toString());
             txtUsuarioPass.setText(tbUsuarios.getValueAt(tbUsuarios.getSelectedRow(), 4).toString());
             int linhaselcionada = tbUsuarios.getSelectedRow();
-            String sta = (String) tbUsuarios.getValueAt(linhaselcionada, 5);
+            /*String sta = (String) tbUsuarios.getValueAt(linhaselcionada, 5);
             cboUsuarioPerfil.setSelectedItem(sta);
-            // cboUsuarioPerfil.setSelectedItem((tbUsuarios.getValueAt(tbUsuarios.getSelectedRow(), 5).toString()));
+            cboUsuarioPerfil.setSelectedItem((tbUsuarios.getValueAt(tbUsuarios.getSelectedRow(), 5).toString()));*/
 
         }
     }//GEN-LAST:event_tbUsuariosKeyReleased

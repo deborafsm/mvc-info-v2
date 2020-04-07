@@ -85,6 +85,9 @@ public class UsuarioDao {
                 usuarios.setTelefoneUsuario(rs.getString("fone"));
                 usuarios.setLogin(rs.getString("login"));
                 usuarios.setSenha(rs.getString("senha"));
+                
+                usuarios.setPerfil(rs.getString("perfil"));
+                
                 //user.add adiciona os usuarios no array list
                 user.add(usuarios);
             }
