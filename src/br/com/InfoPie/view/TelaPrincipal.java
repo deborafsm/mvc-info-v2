@@ -74,9 +74,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
         lblData.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         lblData.setText("data");
 
+        menu.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+
         menuCad.setText("Cadastro");
 
         menuCadCli.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.ALT_MASK));
+        menuCadCli.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/InfoPie/icons/cliente.png"))); // NOI18N
         menuCadCli.setText("Cliente");
         menuCadCli.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -86,6 +89,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         menuCad.add(menuCadCli);
 
         menuCadOs.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.ALT_MASK));
+        menuCadOs.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/InfoPie/icons/os.png"))); // NOI18N
         menuCadOs.setText("Ordem de serviço");
         menuCadOs.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -95,6 +99,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         menuCad.add(menuCadOs);
 
         MenuCadUser.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.ALT_MASK));
+        MenuCadUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/InfoPie/icons/user.png"))); // NOI18N
         MenuCadUser.setText("Usuários");
         MenuCadUser.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -108,6 +113,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         menuRelatorio.setText("Relatório");
 
         MenuRelServ.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.ALT_MASK));
+        MenuRelServ.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/InfoPie/icons/service.png"))); // NOI18N
         MenuRelServ.setText("Serviços");
         menuRelatorio.add(MenuRelServ);
 
@@ -116,6 +122,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         MenuHelp.setText("Ajuda");
 
         MenuHelpSobre.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, java.awt.event.InputEvent.ALT_MASK));
+        MenuHelpSobre.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/InfoPie/icons/sobre.png"))); // NOI18N
         MenuHelpSobre.setText("sobre");
         MenuHelpSobre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -129,6 +136,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         MenuOp.setText("Opções");
 
         MenuExit.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_MASK));
+        MenuExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/InfoPie/icons/sair.png"))); // NOI18N
         MenuExit.setText("Sair");
         MenuExit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
