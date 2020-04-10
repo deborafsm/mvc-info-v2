@@ -31,15 +31,16 @@ public class ClienteDao {
     //Esse método insere um cliente no banco de dados
     public void insertClient(Cliente cliente) {
         //query para adicionar cliente
-        String sql = "INSERT INTO tb_clientes(nome_cliente,end_cliente,fone_cliente,email_cliente)VALUES(?,?,?,?)";
+        String sql = "INSERT INTO clientes(nome,telefone,email,endereco)VALUES(?,?,?,?)";
         PreparedStatement ps = null; //Prepara os parametros de forma mais segura
         try { //tenta fazer a logica abaixo
             ps = con.prepareStatement(sql); //preparada os parametros de forma segura usando a query de inserção
             //Aciona o objeto nas posições que foram colocadas na query (sql)
             ps.setString(1, cliente.getNomeCliente());
-            ps.setString(2, cliente.getEnderecoCliente());
-            ps.setString(3, cliente.getTelefoneCliente());
-            ps.setString(4, cliente.getEmailCliente());
+            ps.setString(2, cliente.getTelefoneCliente());
+            ps.setString(3, cliente.getEmailCliente());
+            ps.setString(4, cliente.getEnderecoCliente());
+            
            //Executa instrução insert
             ps.executeUpdate();
             //Mostra uma mensagem caso a logica estiver  correta
@@ -54,7 +55,7 @@ public class ClienteDao {
     //Esse método exclui um cliente do banco de dados
     public void deleteClient(Cliente cliente) {
         //query deleta cliente de acordo com o id
-        String sql = "DELETE FROM tb_clientes WHERE id_cliente = ?";
+        String sql = "DELETE FROM clientes WHERE id_cliente = ?";
         PreparedStatement ps = null;
         try {//tenta fazer a logica abaixo
             ps = con.prepareStatement(sql);
@@ -74,16 +75,16 @@ public class ClienteDao {
         ResultSet rs = null;
         java.util.List<Cliente> cli = new ArrayList<>(); //Array de clientes
         try {
-            ps = con.prepareStatement("SELECT * FROM tb_clientes"); //Seleciona tdo de tb_clientes
+            ps = con.prepareStatement("SELECT * FROM clientes"); //Seleciona tdo de clientes
             rs = ps.executeQuery(); //Result set para se obter o resultado
             while (rs.next()) {//Enquando tiver resultado (linhas)
                 Cliente cliente = new Cliente();
                 //Lista os componentes
                 cliente.setId(rs.getInt("id_cliente"));
-                cliente.setNomeCliente(rs.getString("nome_cliente"));
-                cliente.setEnderecoCliente(rs.getString("end_cliente"));
-                cliente.setTelefoneCliente(rs.getString("fone_cliente"));
-                cliente.setEmailCliente(rs.getString("email_cliente"));
+                cliente.setNomeCliente(rs.getString("nome"));
+                cliente.setTelefoneCliente(rs.getString("telefone"));
+                cliente.setEmailCliente(rs.getString("email"));
+                cliente.setEnderecoCliente(rs.getString("endereco"));
                 //E adiciona no array list
                 cli.add(cliente);
             }
@@ -99,12 +100,12 @@ public class ClienteDao {
     public void updateCliente(Cliente cliente) {//Query de atualizar cliente
         PreparedStatement ps = null;
         try {//tenta a logica abaixo
-            ps = con.prepareStatement("UPDATE tb_clientes SET nome_cliente = ? , end_cliente = ?,fone_cliente = ?, email_cliente = ?  WHERE id_cliente = ? ");
+            ps = con.prepareStatement("UPDATE clientes SET nome = ? , telefone = ?,email = ?, endereco = ?  WHERE id_cliente = ? ");
             //Permissão para atualizar apenas os componentes abaixo
             ps.setString(1, cliente.getNomeCliente());
-            ps.setString(2, cliente.getEnderecoCliente());
-            ps.setString(3, cliente.getTelefoneCliente());
-            ps.setString(4, cliente.getEmailCliente());
+            ps.setString(2, cliente.getTelefoneCliente());
+            ps.setString(3, cliente.getEmailCliente());
+            ps.setString(4, cliente.getEnderecoCliente());
             ps.setInt(5, cliente.getId());
             //Executando a instrução sql
             ps.executeUpdate();
@@ -122,17 +123,18 @@ public class ClienteDao {
         //Array lista adicionada
         java.util.List<Cliente> cliFinder = new ArrayList<>(); //Array de clientes
         try {   //seleciona por nome do cliente 
-            ps = con.prepareStatement("SELECT * FROM tb_clientes WHERE nome_cliente like ?"); //Seleciona tdo de tb_clientes
+            ps = con.prepareStatement("SELECT * FROM clientes WHERE nome like ?"); //Seleciona tdo de clientes
             ps.setString(1, "%"+nome+"%");// ? = nome
             rs = ps.executeQuery(); //Result set para se obter o resultado
             while (rs.next()) {//Enquando tiver resultado (linhas)
                 Cliente cliente = new Cliente();
                 //Lista os componentes
                 cliente.setId(rs.getInt("id_cliente"));
-                cliente.setNomeCliente(rs.getString("nome_cliente"));
-                cliente.setEnderecoCliente(rs.getString("end_cliente"));
-                cliente.setTelefoneCliente(rs.getString("fone_cliente"));
-                cliente.setEmailCliente(rs.getString("email_cliente"));
+                cliente.setNomeCliente(rs.getString("nome"));
+                cliente.setTelefoneCliente(rs.getString("telefone"));
+                cliente.setEmailCliente(rs.getString("email"));
+                cliente.setEnderecoCliente(rs.getString("endereco"));
+                
                 //E adiciona no array list
                 cliFinder.add(cliente);
             }

@@ -53,9 +53,9 @@ public class TelaClientes extends javax.swing.JInternalFrame {
                 //Chama os item 
                 c.getId(),
                 c.getNomeCliente(),
-                c.getEnderecoCliente(),
                 c.getTelefoneCliente(),
-                c.getEmailCliente()
+                c.getEmailCliente(),
+                c.getEnderecoCliente()
 
             });
 
@@ -63,7 +63,7 @@ public class TelaClientes extends javax.swing.JInternalFrame {
 
     }
 
-    //esse metdo lista dados para dentro da tabela atraves da chamada do metodo finderCliente
+//esse metdo lista dados para dentro da tabela atraves da chamada do metodo finderCliente
     public void readJtableForNameClient(String nome) {
         DefaultTableModel model = (DefaultTableModel) tblClientes.getModel();
         model.setNumRows(0);
@@ -75,9 +75,9 @@ public class TelaClientes extends javax.swing.JInternalFrame {
                 //Chama os item 
                 c.getId(),
                 c.getNomeCliente(),
-                c.getEnderecoCliente(),
                 c.getTelefoneCliente(),
-                c.getEmailCliente()
+                c.getEmailCliente(),
+                c.getEnderecoCliente()
 
             });
 
@@ -144,6 +144,12 @@ public class TelaClientes extends javax.swing.JInternalFrame {
         txtNome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtNomeActionPerformed(evt);
+            }
+        });
+
+        txtMail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtMailActionPerformed(evt);
             }
         });
 
@@ -224,13 +230,13 @@ public class TelaClientes extends javax.swing.JInternalFrame {
                                 .addGap(0, 198, Short.MAX_VALUE))
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtMail)
-                                    .addComponent(txtEndereco)
                                     .addComponent(txtNome)
                                     .addGroup(jPanel3Layout.createSequentialGroup()
                                         .addComponent(txtFone, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(0, 0, Short.MAX_VALUE)))
-                                .addContainerGap())))
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addComponent(txtMail))
+                                .addContainerGap())
+                            .addComponent(txtEndereco)))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(btnAddCliente)
                         .addGap(18, 18, 18)
@@ -249,7 +255,7 @@ public class TelaClientes extends javax.swing.JInternalFrame {
                 .addGap(30, 30, 30)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(txtEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtMail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -257,7 +263,7 @@ public class TelaClientes extends javax.swing.JInternalFrame {
                 .addGap(29, 29, 29)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(txtMail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(31, 31, 31)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
@@ -393,9 +399,10 @@ public class TelaClientes extends javax.swing.JInternalFrame {
         ClienteDao dao = new ClienteDao();
         //Adiciona o cliente com base dos dados que serão escritos pelo usuario
         cliente.setNomeCliente(txtNome.getText());
-        cliente.setEnderecoCliente(txtEndereco.getText());
         cliente.setTelefoneCliente(txtFone.getText());
         cliente.setEmailCliente(txtMail.getText());
+        cliente.setEnderecoCliente(txtEndereco.getText());
+
         //chama o metodo de inserir o cliente
         dao.insertClient(cliente);
         //Tira os textos dos campos
@@ -436,9 +443,11 @@ public class TelaClientes extends javax.swing.JInternalFrame {
             ClienteDao dao = new ClienteDao();
             //Seta todos os campos que podem ser atualizados
             cliente.setNomeCliente(txtNome.getText());
-            cliente.setEnderecoCliente(txtEndereco.getText());
             cliente.setTelefoneCliente(txtFone.getText());
             cliente.setEmailCliente(txtMail.getText());
+            cliente.setEnderecoCliente(txtEndereco.getText());
+            
+            
             //A atualização só vai ser possivel atraves do id
             cliente.setId((int) tblClientes.getValueAt(tblClientes.getSelectedRow(), 0));
             //Chama metodo UPDATE 
@@ -457,9 +466,9 @@ public class TelaClientes extends javax.swing.JInternalFrame {
         if (tblClientes.getSelectedRow() != -1) {
             //Preenche os campos ao clicar dentro de um dado na tabela
             txtNome.setText(tblClientes.getValueAt(tblClientes.getSelectedRow(), 1).toString());
-            txtEndereco.setText(tblClientes.getValueAt(tblClientes.getSelectedRow(), 2).toString());
-            txtFone.setText(tblClientes.getValueAt(tblClientes.getSelectedRow(), 3).toString());
-            txtMail.setText(tblClientes.getValueAt(tblClientes.getSelectedRow(), 4).toString());
+            txtFone.setText(tblClientes.getValueAt(tblClientes.getSelectedRow(), 2).toString());
+            txtMail.setText(tblClientes.getValueAt(tblClientes.getSelectedRow(), 3).toString());
+            txtEndereco.setText(tblClientes.getValueAt(tblClientes.getSelectedRow(), 4).toString());
 
         }
     }//GEN-LAST:event_tblClientesMouseClicked
@@ -468,9 +477,9 @@ public class TelaClientes extends javax.swing.JInternalFrame {
         if (tblClientes.getSelectedRow() != -1) {
             //Preenche os campos ao clicar dentro de um dado na tabela
             txtNome.setText(tblClientes.getValueAt(tblClientes.getSelectedRow(), 1).toString());
-            txtEndereco.setText(tblClientes.getValueAt(tblClientes.getSelectedRow(), 2).toString());
-            txtFone.setText(tblClientes.getValueAt(tblClientes.getSelectedRow(), 3).toString());
-            txtMail.setText(tblClientes.getValueAt(tblClientes.getSelectedRow(), 4).toString());
+            txtFone.setText(tblClientes.getValueAt(tblClientes.getSelectedRow(), 2).toString());
+            txtMail.setText(tblClientes.getValueAt(tblClientes.getSelectedRow(), 3).toString());
+            txtEndereco.setText(tblClientes.getValueAt(tblClientes.getSelectedRow(), 4).toString());
 
         }
     }//GEN-LAST:event_tblClientesKeyReleased
@@ -480,6 +489,10 @@ public class TelaClientes extends javax.swing.JInternalFrame {
         //Pega o nome da pessoa e busca no banco de dados
         readJtableForNameClient(txtFinderName.getText());
     }//GEN-LAST:event_btnPesquisarActionPerformed
+
+    private void txtMailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtMailActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
