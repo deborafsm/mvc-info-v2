@@ -115,6 +115,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         MenuRelServ.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.ALT_MASK));
         MenuRelServ.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/InfoPie/icons/service.png"))); // NOI18N
         MenuRelServ.setText("Serviços");
+        MenuRelServ.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuRelServActionPerformed(evt);
+            }
+        });
         menuRelatorio.add(MenuRelServ);
 
         menu.add(menuRelatorio);
@@ -230,6 +235,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
         TelaSobre sobre = new TelaSobre();
         sobre.setVisible(true);
     }//GEN-LAST:event_MenuHelpSobreActionPerformed
+
+    private void MenuRelServActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuRelServActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_MenuRelServActionPerformed
 
     /**
      * @param args the command line arguments

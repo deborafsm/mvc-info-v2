@@ -513,6 +513,7 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        //Limpa campos 
         txtUsuarioNome.setText("");
         txtUsuarioLogin.setText("");
         txtUsuarioPass.setText("");
