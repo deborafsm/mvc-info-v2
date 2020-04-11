@@ -294,7 +294,7 @@ public class TelaClientes extends javax.swing.JInternalFrame {
                 {null, null, null, null, null}
             },
             new String [] {
-                "ID", "NOME", "ENDEREÇO", "TELEFONE", "EMAIL"
+                "ID", "NOME", "TELEFONE", "E-MAIL", "ENDEREÇO"
             }
         ) {
             boolean[] canEdit = new boolean [] {
