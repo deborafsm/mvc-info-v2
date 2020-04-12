@@ -5,27 +5,27 @@
  */
 package br.com.InfoPie.model.beans;
 
-
-
 /**
  *
  * @author DeboraDev
  */
-public class OrdemServico {
-    private int idOrdemServico;
-    private String equipamento;
+public class OrdemServico extends Equipamentos {
+
+    private int id_os;
+    private String situacao;
     private String defeito;
     private String servico;
     private String tecnico;
-    private double valor ;
+    private double valor;
     private Cliente cliente;
+    private Equipamentos equipamentos;
 
     public OrdemServico() {
     }
 
-    public OrdemServico(int idOrdemServico, String equipamento, String defeito, String servico, String tecnico, double valor, Cliente cliente) {
-        this.idOrdemServico = idOrdemServico;
-        this.equipamento = equipamento;
+    public OrdemServico(int id_os, String situacao, String defeito, String servico, String tecnico, double valor, Cliente cliente) {
+        this.id_os = id_os;
+        this.situacao = situacao;
         this.defeito = defeito;
         this.servico = servico;
         this.tecnico = tecnico;
@@ -33,33 +33,50 @@ public class OrdemServico {
         this.cliente = cliente;
     }
 
-    public OrdemServico(String equipamento, String defeito, String servico, String tecnico, double valor, Cliente cliente) {
-        this.equipamento = equipamento;
+    public OrdemServico(String situacao, String defeito, String servico, String tecnico, double valor, Cliente cliente, Equipamentos equipamentos) {
+        this.situacao = situacao;
         this.defeito = defeito;
         this.servico = servico;
         this.tecnico = tecnico;
         this.valor = valor;
         this.cliente = cliente;
+        this.equipamentos = equipamentos;
+    }
+    
+
+    public Equipamentos getEquipamentos() {
+        return equipamentos;
     }
 
+    public void setEquipamentos(Equipamentos equipamentos) {
+        this.equipamentos = equipamentos;
+    }
     
-    
-    
+
+    public int getId_os() {
+        return id_os;
+    }
+
+    public void setId_os(int id_os) {
+        this.id_os = id_os;
+    }
+
+    public String getSituacao() {
+        return situacao;
+    }
+
+    public void setSituacao(String situacao) {
+        this.situacao = situacao;
+    }
+
     public int getIdOrdemServico() {
-        return idOrdemServico;
+        return id_os;
     }
 
-    public void setIdOrdemServico(int idOrdemServico) {
-        this.idOrdemServico = idOrdemServico;
+    public void setIdOrdemServico(int id_os) {
+        this.id_os = id_os;
     }
 
-    public String getEquipamento() {
-        return equipamento;
-    }
-
-    public void setEquipamento(String equipamento) {
-        this.equipamento = equipamento;
-    }
 
     public String getDefeito() {
         return defeito;
@@ -100,7 +117,5 @@ public class OrdemServico {
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
-    
-  
-         
+
 }

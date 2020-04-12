@@ -7,8 +7,12 @@ package br.com.InfoPie.view;
 
 import java.sql.*;
 import br.com.InfoPie.connection.ConnectionFactory;
+import br.com.InfoPie.model.beans.OrdemServico;
+import br.com.InfoPie.modelDAO.OrdemDeServicoDao;
 import java.awt.HeadlessException;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 import net.proteanit.sql.DbUtils;
 
 /**
@@ -30,6 +34,37 @@ public class TelaOrdemServico extends javax.swing.JInternalFrame {
         initComponents();
         //chamando metodo conector / atribuir conexao ;
         conexao = ConnectionFactory.getConnection();
+        //Cria o modelo da tabela 
+        DefaultTableModel model = (DefaultTableModel) tblOsCliente.getModel();
+        //Classificador de linha
+        tblOsCliente.setRowSorter(new TableRowSorter(model));
+
+        readJtable();//Já inicia com os dados do banco selecionado na tabela
+
+    }
+
+    public void readJtable() {
+        DefaultTableModel model = (DefaultTableModel) tblOsCliente.getModel();
+        model.setNumRows(0);
+        OrdemDeServicoDao os = new OrdemDeServicoDao();
+
+        os.findAll().forEach((oserv) -> {
+            // for é usado para passar pelos objetos
+            model.addRow(new Object[]{
+                /* ordemdeservico.tecnico, ordemdeservico.servico,ordemdeservico.situacao,ordemdeservico.
+                valor, equipamento.defeito,equipamento.marca,equipamento.tipo\n"
+                + "from ordemdeservico \n"
+                + "inner join equipamento on ordemdeservico.id_os = equipamento.id_os;";*/
+                oserv.getTecnico(),
+                oserv.getServico(),
+                oserv.getSituacao(),
+                oserv.getValor(),
+                //dEU 
+                oserv.getDefeito(),
+                oserv.getMarca(),
+                oserv.getTipo()
+            });
+        });
 
     }
 
@@ -64,7 +99,7 @@ public class TelaOrdemServico extends javax.swing.JInternalFrame {
             pst.setString(4, txtOsDefeito.getText());
             pst.setString(5, txtOsServico.getText());
             pst.setString(6, txtOsTecnico.getText());
-            pst.setString(7, txtValorTotal  .getText().replace(",", ".")); // Trocar vigula pelo ponto
+            pst.setString(7, txtValorTotal.getText().replace(",", ".")); // Trocar vigula pelo ponto
             pst.setString(8, txtOsId.getText());
 
             //Validação dos campos OBRIGATORIOS
@@ -190,7 +225,7 @@ public class TelaOrdemServico extends javax.swing.JInternalFrame {
                 pst.setString(1, txtOsNumeroOs.getText());
                 int apagar = pst.executeUpdate();
                 if (apagar > 0) {
-                    
+
                     JOptionPane.showMessageDialog(null, "Ordem de serviço excluida com sucesso");
                     txtOsNumeroOs.setText(null);
                     txtOsData.setText(null);
@@ -361,17 +396,17 @@ public class TelaOrdemServico extends javax.swing.JInternalFrame {
 
         tblOsCliente.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Id_Cliente", "Nome_Cliente", "Telefone", "numero de serie"
+                "TECNICO", "SERVICO", "SITUAÇÃO", "VALOR", "DEFEITO", "MARCA", "TIPO"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false, true, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -560,9 +595,7 @@ public class TelaOrdemServico extends javax.swing.JInternalFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, 0))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(1, 1, 1)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -581,7 +614,7 @@ public class TelaOrdemServico extends javax.swing.JInternalFrame {
                         .addGap(10, 10, 10))))
         );
 
-        setSize(new java.awt.Dimension(929, 535));
+        setSize(new java.awt.Dimension(984, 600));
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtOsFinderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtOsFinderActionPerformed
@@ -598,16 +631,6 @@ public class TelaOrdemServico extends javax.swing.JInternalFrame {
         setaCampos();
 
     }//GEN-LAST:event_tblOsClienteMouseClicked
-
-    private void rbOsOrcamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbOsOrcamentoActionPerformed
-        // Atribuindo um texto a variavel se for selecionado
-        tipo = "Orçamento";
-    }//GEN-LAST:event_rbOsOrcamentoActionPerformed
-
-    private void rbOsOrdemServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbOsOrdemServicoActionPerformed
-        // Atribuindo um texto a variavel se for selecionado
-        tipo = "Ordem de Serviço";
-    }//GEN-LAST:event_rbOsOrdemServicoActionPerformed
 
     private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
         // Ao abrir o form, marcar o RadioButton Orcamento
@@ -634,8 +657,18 @@ public class TelaOrdemServico extends javax.swing.JInternalFrame {
 
     private void btnOsRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOsRemoveActionPerformed
         //Metodo exclui OS
-        excluir_os(); 
+        excluir_os();
     }//GEN-LAST:event_btnOsRemoveActionPerformed
+
+    private void rbOsOrcamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbOsOrcamentoActionPerformed
+        // Atribuindo um texto a variavel se for selecionado
+        tipo = "Orçamento";
+    }//GEN-LAST:event_rbOsOrcamentoActionPerformed
+
+    private void rbOsOrdemServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbOsOrdemServicoActionPerformed
+        // Atribuindo um texto a variavel se for selecionado
+        tipo = "Ordem de Serviço";
+    }//GEN-LAST:event_rbOsOrdemServicoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

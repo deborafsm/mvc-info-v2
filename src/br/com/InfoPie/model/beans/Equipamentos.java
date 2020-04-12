@@ -10,6 +10,7 @@ package br.com.InfoPie.model.beans;
  * @author DeboraDev
  */
 public class Equipamentos {
+
     private int id_equipamento;
     private String marca;
     private String modelo;
@@ -18,13 +19,13 @@ public class Equipamentos {
     private String ano;
     private String defeito;
     private String observacao;
+    private String tipo;
     private Cliente cliente;
-    private OrdemServico os;
 
     public Equipamentos() {
     }
 
-    public Equipamentos(String marca, String modelo, String numeroSerie, String sistemaOp, String ano, String defeito, String observacao, Cliente cliente, OrdemServico os) {
+    public Equipamentos(String marca, String modelo, String numeroSerie, String sistemaOp, String ano, String defeito, String observacao, String tipo, Cliente cliente) {
         this.marca = marca;
         this.modelo = modelo;
         this.numeroSerie = numeroSerie;
@@ -32,27 +33,28 @@ public class Equipamentos {
         this.ano = ano;
         this.defeito = defeito;
         this.observacao = observacao;
+        this.tipo = tipo;
         this.cliente = cliente;
-        this.os = os;
+    }
+    
+  
+
+    public String getTipo() {
+        return tipo;
     }
 
-    
-    
-    public Equipamentos(int id_equipamento, String marca, String modelo, String numeroSerie, String sistemaOp, String ano, String defeito, String observacao, Cliente cliente, OrdemServico os) {
-        this.id_equipamento = id_equipamento;
-        this.marca = marca;
-        this.modelo = modelo;
-        this.numeroSerie = numeroSerie;
-        this.sistemaOp = sistemaOp;
-        this.ano = ano;
-        this.defeito = defeito;
-        this.observacao = observacao;
-        this.cliente = cliente;
-        this.os = os;
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
-    
-    
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
     public int getId_equipamento() {
         return id_equipamento;
     }
@@ -116,5 +118,5 @@ public class Equipamentos {
     public void setObservacao(String observacao) {
         this.observacao = observacao;
     }
-    
+
 }
