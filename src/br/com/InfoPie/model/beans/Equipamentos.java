@@ -14,7 +14,7 @@ public class Equipamentos {
     private int id_equipamento;
     private String marca;
     private String modelo;
-    private String numeroSerie;
+    private int numeroSerie;
     private String sistemaOp;
     private String ano;
     private String defeito;
@@ -25,7 +25,7 @@ public class Equipamentos {
     public Equipamentos() {
     }
 
-    public Equipamentos(String marca, String modelo, String numeroSerie, String sistemaOp, String ano, String defeito, String observacao, String tipo, Cliente cliente) {
+    public Equipamentos(String marca, String modelo, int numeroSerie, String sistemaOp, String ano, String defeito, String observacao, String tipo, Cliente cliente) {
         this.marca = marca;
         this.modelo = modelo;
         this.numeroSerie = numeroSerie;
@@ -79,14 +79,15 @@ public class Equipamentos {
         this.modelo = modelo;
     }
 
-    public String getNumeroSerie() {
+    public int getNumeroSerie() {
         return numeroSerie;
     }
 
-    public void setNumeroSerie(String numeroSerie) {
+    public void setNumeroSerie(int numeroSerie) {
         this.numeroSerie = numeroSerie;
     }
 
+   
     public String getSistemaOp() {
         return sistemaOp;
     }

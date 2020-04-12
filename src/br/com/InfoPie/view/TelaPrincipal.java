@@ -238,6 +238,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void MenuRelServActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuRelServActionPerformed
         // TODO add your handling code here:
+        TelaOrdemDeServico pedido = new TelaOrdemDeServico();
+        pedido.setVisible(true);
+        desktop.add(pedido);
     }//GEN-LAST:event_MenuRelServActionPerformed
 
     /**

@@ -13,6 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -25,12 +26,33 @@ public class OrdemDeServicoDao {
     public OrdemDeServicoDao() {
         con = ConnectionFactory.getConnection();
     }
-
+    //Inserir OS no banco de dados
+    public void insertOs(OrdemServico os){
+        String sql = "INSERT INTO ordemdeservico (servico,tecnico,valor,situacao,data_ini,data_fim) VALUES(?,?,?,?,?,?)";
+        PreparedStatement ps = null;
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setString(1, os.getServico());
+            ps.setString(2, os.getTecnico());
+            ps.setDouble(3, os.getValor());
+            ps.setString(4, os.getSituacao());
+            ps.setString(5, os.getDataIni());
+            ps.setString(6, os.getDataFim());
+            ps.executeUpdate();
+            JOptionPane.showMessageDialog(null,"Ordem de Serviço inserido com sucesso!");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro"+e);
+        }finally{
+            ConnectionFactory.closeConection(con, ps);
+        }
+    }
+    
+    //Lista com inner join Teste
     public List<OrdemServico> findAll() {
         //Query para selecionar toda a tabela = tb_categoria
         String sql = "select ordemdeservico.tecnico, ordemdeservico.servico,ordemdeservico.situacao,ordemdeservico.valor, equipamento.defeito,equipamento.marca,equipamento.tipo\n"
                 + "from ordemdeservico \n"
-                + "inner join equipamento on ordemdeservico.id_os = equipamento.id_os;";
+                + "inner join equipamento on ordemdeservico.id_os = equipamento.id_os";
         //Prepara os parametros para ser exibido de forma segura
         PreparedStatement ps = null;
         //Resultado da execução de consulta sql
@@ -60,9 +82,11 @@ public class OrdemDeServicoDao {
                 os.setValor(rs.getDouble("valor"));
 
                 Equipamentos eq = new Equipamentos();
+                //eq.setId_equipamento(rs.getInt("id_equipamento"));
                 eq.setDefeito(rs.getString("defeito"));
-                eq.setTipo(rs.getString("tipo"));
                 eq.setMarca(rs.getString("marca"));
+                eq.setTipo(rs.getString("tipo"));
+
                 os.setEquipamentos(eq);
                 //e add um objeto a categoria
                 osList.add(os);

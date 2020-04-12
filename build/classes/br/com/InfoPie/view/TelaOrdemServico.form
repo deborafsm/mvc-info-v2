@@ -279,7 +279,7 @@
                     <Column editable="false" title="SITUA&#xc7;&#xc3;O" type="java.lang.Object"/>
                     <Column editable="false" title="VALOR" type="java.lang.Object"/>
                     <Column editable="false" title="DEFEITO" type="java.lang.Object"/>
-                    <Column editable="true" title="MARCA" type="java.lang.Object"/>
+                    <Column editable="false" title="MARCA" type="java.lang.Object"/>
                     <Column editable="false" title="TIPO" type="java.lang.Object"/>
                   </Table>
                 </Property>

@@ -7,7 +7,7 @@ package br.com.InfoPie.view;
 
 import java.sql.*;
 import br.com.InfoPie.connection.ConnectionFactory;
-import br.com.InfoPie.model.beans.OrdemServico;
+import br.com.InfoPie.model.beans.Equipamentos;
 import br.com.InfoPie.modelDAO.OrdemDeServicoDao;
 import java.awt.HeadlessException;
 import javax.swing.JOptionPane;
@@ -59,7 +59,7 @@ public class TelaOrdemServico extends javax.swing.JInternalFrame {
                 oserv.getServico(),
                 oserv.getSituacao(),
                 oserv.getValor(),
-                //dEU 
+                 
                 oserv.getDefeito(),
                 oserv.getMarca(),
                 oserv.getTipo()
@@ -67,6 +67,7 @@ public class TelaOrdemServico extends javax.swing.JInternalFrame {
         });
 
     }
+       
 
     private void pesquisarCliente() {
         String sql = "select id_cliente as id, nome_cliente as nome, fone_cliente as fone from tb_clientes where nome_cliente like ? ";
@@ -406,7 +407,7 @@ public class TelaOrdemServico extends javax.swing.JInternalFrame {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, true, false
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {

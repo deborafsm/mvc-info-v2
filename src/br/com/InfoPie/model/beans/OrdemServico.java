@@ -18,6 +18,8 @@ public class OrdemServico extends Equipamentos {
     private String tecnico;
     private double valor;
     private Cliente cliente;
+    private String dataIni;
+    private String dataFim;
     private Equipamentos equipamentos;
 
     public OrdemServico() {
@@ -41,6 +43,34 @@ public class OrdemServico extends Equipamentos {
         this.valor = valor;
         this.cliente = cliente;
         this.equipamentos = equipamentos;
+    }
+
+    public OrdemServico(String situacao, String defeito, String servico, String tecnico, double valor, Cliente cliente, String dataIni, String dataFim, Equipamentos equipamentos) {
+        this.situacao = situacao;
+        this.defeito = defeito;
+        this.servico = servico;
+        this.tecnico = tecnico;
+        this.valor = valor;
+        this.cliente = cliente;
+        this.dataIni = dataIni;
+        this.dataFim = dataFim;
+        this.equipamentos = equipamentos;
+    }
+
+    public String getDataIni() {
+        return dataIni;
+    }
+
+    public void setDataIni(String dataIni) {
+        this.dataIni = dataIni;
+    }
+
+    public String getDataFim() {
+        return dataFim;
+    }
+
+    public void setDataFim(String dataFim) {
+        this.dataFim = dataFim;
     }
     
 
