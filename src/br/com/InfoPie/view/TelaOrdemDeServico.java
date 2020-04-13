@@ -427,7 +427,7 @@ public class TelaOrdemDeServico extends javax.swing.JInternalFrame {
         equipamentos.setMarca(txtMarca.getText());
         equipamentos.setModelo(txtModelo.getText());
         equipamentos.setSistemaOp(cboSistemaOp.getSelectedItem().toString());
-        equipamentos.setNumeroSerie(Integer.parseInt(txtSerie.getText().toString()));
+        equipamentos.setNumeroSerie(txtSerie.getText());
         equipamentos.setDefeito(txtDefeito.getText());
         equipamentos.setObservacao(txtObs.getText());
         edao.insertEquipamento(equipamentos);
@@ -436,7 +436,7 @@ public class TelaOrdemDeServico extends javax.swing.JInternalFrame {
         txtModelo.setText("");
         txtDefeito.setText("");
         txtObs.setText("");
-      
+
         //OS
         OrdemServico os = new OrdemServico();
         OrdemDeServicoDao daoos = new OrdemDeServicoDao();

@@ -26,8 +26,9 @@ public class OrdemDeServicoDao {
     public OrdemDeServicoDao() {
         con = ConnectionFactory.getConnection();
     }
+
     //Inserir OS no banco de dados
-    public void insertOs(OrdemServico os){
+    public void insertOs(OrdemServico os) {
         String sql = "INSERT INTO ordemdeservico (servico,tecnico,valor,situacao,data_ini,data_fim) VALUES(?,?,?,?,?,?)";
         PreparedStatement ps = null;
         try {
@@ -39,20 +40,18 @@ public class OrdemDeServicoDao {
             ps.setString(5, os.getDataIni());
             ps.setString(6, os.getDataFim());
             ps.executeUpdate();
-            JOptionPane.showMessageDialog(null,"Ordem de Serviço inserido com sucesso!");
+            JOptionPane.showMessageDialog(null, "Ordem de Serviço inserido com sucesso!");
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro"+e);
-        }finally{
+            JOptionPane.showMessageDialog(null, "Erro" + e);
+        } finally {
             ConnectionFactory.closeConection(con, ps);
         }
     }
-    
+
     //Lista com inner join Teste
     public List<OrdemServico> findAll() {
         //Query para selecionar toda a tabela = tb_categoria
-        String sql = "select ordemdeservico.tecnico, ordemdeservico.servico,ordemdeservico.situacao,ordemdeservico.valor, equipamento.defeito,equipamento.marca,equipamento.tipo\n"
-                + "from ordemdeservico \n"
-                + "inner join equipamento on ordemdeservico.id_os = equipamento.id_os";
+        String sql = "select * from view_controle;";
         //Prepara os parametros para ser exibido de forma segura
         PreparedStatement ps = null;
         //Resultado da execução de consulta sql

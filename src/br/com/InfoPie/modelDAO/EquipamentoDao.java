@@ -30,7 +30,7 @@ public class EquipamentoDao {
             ps = con.prepareStatement(sql);
             ps.setString(1,equipamento.getMarca());
             ps.setString(2,equipamento.getModelo());
-            ps.setInt(3,equipamento.getNumeroSerie());
+            ps.setString(3,equipamento.getNumeroSerie());
             ps.setString(4,equipamento.getSistemaOp());
             ps.setString(5, equipamento.getDefeito());
             ps.setString(6, equipamento.getObservacao());
