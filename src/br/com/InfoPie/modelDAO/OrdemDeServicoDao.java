@@ -51,7 +51,7 @@ public class OrdemDeServicoDao {
     //Lista com inner join Teste
     public List<OrdemServico> findAll() {
         //Query para selecionar toda a tabela = tb_categoria
-        String sql = "select * from view_controle;";
+        String sql = "select * from view_controle";
         //Prepara os parametros para ser exibido de forma segura
         PreparedStatement ps = null;
         //Resultado da execução de consulta sql
@@ -79,15 +79,11 @@ public class OrdemDeServicoDao {
                 os.setServico(rs.getString("servico"));
                 os.setSituacao(rs.getString("situacao"));
                 os.setValor(rs.getDouble("valor"));
-
-                Equipamentos eq = new Equipamentos();
-                //eq.setId_equipamento(rs.getInt("id_equipamento"));
-                eq.setDefeito(rs.getString("defeito"));
-                eq.setMarca(rs.getString("marca"));
-                eq.setTipo(rs.getString("tipo"));
-
-                os.setEquipamentos(eq);
-                //e add um objeto a categoria
+                /*Para funcionar o inner join é necessario q a coluna a 
+                ser concatenada herde os getters e setters dai é só chamar os objetos pela classe filha(subclasse)*/
+                os.setDefeito(rs.getString("defeito"));
+                os.setMarca(rs.getString("marca"));
+                os.setTipo(rs.getString("tipo"));
                 osList.add(os);
             }
             //Erro

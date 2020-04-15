@@ -3,15 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/DeboraDev/Documents/OS/OS/src/br/com/InfoPie/view/Login.java</file>
             <file>file:/C:/Users/DeboraDev/Documents/OS/OS/src/br/com/InfoPie/view/TelaOrdemDeServico.java</file>
             <file>file:/C:/Users/DeboraDev/Documents/OS/OS/src/br/com/InfoPie/view/TelaPrincipal.java</file>
-            <file>file:/C:/Users/DeboraDev/Documents/OS/OS/src/br/com/InfoPie/view/TelaSobre.java</file>
-            <file>file:/C:/Users/DeboraDev/Documents/OS/OS/src/br/com/InfoPie/model/beans/Equipamentos.java</file>
-            <file>file:/C:/Users/DeboraDev/Documents/OS/OS/src/br/com/InfoPie/modelDAO/EquipamentoDao.java</file>
-            <file>file:/C:/Users/DeboraDev/Documents/OS/OS/src/br/com/InfoPie/view/TelaOrdemServico.java</file>
             <file>file:/C:/Users/DeboraDev/Documents/OS/OS/src/br/com/InfoPie/modelDAO/ClienteDao.java</file>
             <file>file:/C:/Users/DeboraDev/Documents/OS/OS/src/br/com/InfoPie/modelDAO/OrdemDeServicoDao.java</file>
+            <file>file:/C:/Users/DeboraDev/Documents/OS/OS/src/br/com/InfoPie/view/TelaClientes.java</file>
             <file>file:/C:/Users/DeboraDev/Documents/OS/OS/src/br/com/InfoPie/view/TelaUsuario.java</file>
         </group>
     </open-files>

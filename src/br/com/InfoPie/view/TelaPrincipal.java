@@ -89,9 +89,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         menuCad.add(menuCadCli);
 
-        menuCadOs.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.ALT_MASK));
+        menuCadOs.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_H, java.awt.event.InputEvent.ALT_MASK));
         menuCadOs.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/InfoPie/icons/os.png"))); // NOI18N
-        menuCadOs.setText("Ordem de serviço");
+        menuCadOs.setText("HelpDesk");
         menuCadOs.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuCadOsActionPerformed(evt);
@@ -211,7 +211,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void menuCadOsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCadOsActionPerformed
         //Chamando a tela Ordem de serviço
-        TelaOrdemServico os = new TelaOrdemServico();
+        HelpDesk os = new HelpDesk();
         os.setVisible(true);
         desktop.add(os);
     }//GEN-LAST:event_menuCadOsActionPerformed
